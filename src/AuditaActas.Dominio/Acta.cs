@@ -19,6 +19,9 @@ public class Acta
     /// <summary>Etiqueta del simulador (solo para evaluar el detector). No forma parte del hash.</summary>
     public bool EsFraudeSimulado { get; set; }
 
+    /// <summary>Tipo de fraude inyectado por el simulador (vacío si el acta es normal). No forma parte del hash.</summary>
+    public string TipoFraudeSimulado { get; set; } = string.Empty;
+
     public string HashAnterior { get; set; } = string.Empty;
     public string Hash { get; set; } = string.Empty;
 

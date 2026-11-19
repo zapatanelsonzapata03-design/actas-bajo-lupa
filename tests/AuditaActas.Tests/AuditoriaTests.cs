@@ -26,4 +26,33 @@ public class AuditoriaTests
 
         Assert.True(alertas < 100, $"Alertas = {alertas}");
     }
+
+    [Fact]
+    public void DatasetPequeno_UsaRespaldoPorDepartamentoONacional_SinErrores()
+    {
+        var actas = new GeneradorService().Generar(new ParametrosSimulacion(Mesas: 5, Semilla: 12));
+
+        var resultados = new AuditoriaService().Auditar(actas);
+
+        Assert.Equal(5, resultados.Count);
+        Assert.All(resultados, r => Assert.NotNull(r.Acta));
+        Assert.All(resultados, r => Assert.False(string.IsNullOrWhiteSpace(r.Motivo)));
+    }
+
+    [Fact]
+    public void UmbralMuyAlto_NoMarcaNingunaActa()
+    {
+        var actas = new GeneradorService().Generar(new ParametrosSimulacion(Mesas: 200, PorcentajeFraude: 0.05, Semilla: 13));
+
+        var resultados = new AuditoriaService().Auditar(actas, umbral: 1000);
+
+        Assert.DoesNotContain(resultados, r => r.EsSospechosa);
+    }
+
+    [Fact]
+    public void UmbralInvalido_LanzaExcepcion()
+    {
+        var actas = new GeneradorService().Generar(new ParametrosSimulacion(Mesas: 10, Semilla: 14));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new AuditoriaService().Auditar(actas, 0));
+    }
 }

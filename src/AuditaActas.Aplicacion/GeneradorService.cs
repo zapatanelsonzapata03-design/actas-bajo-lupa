@@ -74,12 +74,14 @@ public class GeneradorService
 
         if (rng.Next(2) == 0)
         {
+            acta.TipoFraudeSimulado = "relleno_urna";
             int extra = acta.Habilitados - acta.Emitidos;
             acta.Emitidos = acta.Habilitados;
             acta.Votos[favorecido] += extra;
         }
         else
         {
+            acta.TipoFraudeSimulado = "transferencia_votos";
             foreach (var otro in candidatos.Skip(1))
             {
                 int mover = (int)Math.Round(acta.Votos[otro] * 0.30);

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using AuditaActas.Dominio;
 using Microsoft.Data.Sqlite;
@@ -31,6 +32,7 @@ public class ActaRepositorio : IDisposable
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             fecha_utc TEXT NOT NULL,
             usuario TEXT NOT NULL,
+            rol TEXT NOT NULL DEFAULT 'Operador',
             accion TEXT NOT NULL,
             detalle TEXT
         );
@@ -45,6 +47,33 @@ public class ActaRepositorio : IDisposable
         using var cmd = _conexion.CreateCommand();
         cmd.CommandText = Esquema;
         cmd.ExecuteNonQuery();
+
+        // Migración mínima para bases creadas antes de RF8 (ignora el error si la columna ya existe).
+        try
+        {
+            using var migracion = _conexion.CreateCommand();
+            migracion.CommandText = "ALTER TABLE bitacora ADD COLUMN rol TEXT NOT NULL DEFAULT 'Operador';";
+            migracion.ExecuteNonQuery();
+        }
+        catch (SqliteException)
+        {
+            // Columna ya presente: no hay nada que migrar.
+        }
+    }
+
+    public int Contar()
+    {
+        using var cmd = _conexion.CreateCommand();
+        cmd.CommandText = "SELECT COUNT(*) FROM actas;";
+        return Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
+    }
+
+    public bool ExisteClave(string clave)
+    {
+        using var cmd = _conexion.CreateCommand();
+        cmd.CommandText = "SELECT COUNT(*) FROM actas WHERE clave = $clave;";
+        cmd.Parameters.AddWithValue("$clave", clave);
+        return Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture) > 0;
     }
 
     public void InsertarVarias(IEnumerable<Acta> actas)
@@ -103,6 +132,7 @@ public class ActaRepositorio : IDisposable
                 Nulos = r.GetInt32(7),
                 Votos = JsonSerializer.Deserialize<Dictionary<string, int>>(r.GetString(8)) ?? new(),
                 EsFraudeSimulado = r.GetInt32(9) == 1,
+                TipoFraudeSimulado = r.GetInt32(9) == 1 ? "registrado_en_bd" : string.Empty,
                 HashAnterior = r.GetString(10),
                 Hash = r.GetString(11)
             });
@@ -110,15 +140,60 @@ public class ActaRepositorio : IDisposable
         return actas;
     }
 
-    public void RegistrarBitacora(string usuario, string accion, string? detalle = null)
+    public void RegistrarBitacora(string usuario, string accion, string? detalle = null) =>
+        RegistrarBitacora(usuario, RolUsuario.Operador, accion, detalle);
+
+    public void RegistrarBitacora(string usuario, RolUsuario rol, string accion, string? detalle = null)
     {
         using var cmd = _conexion.CreateCommand();
-        cmd.CommandText = "INSERT INTO bitacora (fecha_utc, usuario, accion, detalle) VALUES ($f, $u, $a, $d);";
-        cmd.Parameters.AddWithValue("$f", DateTime.UtcNow.ToString("O"));
-        cmd.Parameters.AddWithValue("$u", usuario);
+        cmd.CommandText = "INSERT INTO bitacora (fecha_utc, usuario, rol, accion, detalle) VALUES ($f, $u, $r, $a, $d);";
+        cmd.Parameters.AddWithValue("$f", DateTime.UtcNow.ToString("O", CultureInfo.InvariantCulture));
+        cmd.Parameters.AddWithValue("$u", string.IsNullOrWhiteSpace(usuario) ? "desconocido" : usuario);
+        cmd.Parameters.AddWithValue("$r", rol.ToString());
         cmd.Parameters.AddWithValue("$a", accion);
         cmd.Parameters.AddWithValue("$d", (object?)detalle ?? DBNull.Value);
         cmd.ExecuteNonQuery();
+    }
+
+    /// <summary>Copia una entrada de la bitácora de sesión conservando su marca de tiempo.</summary>
+    public void InsertarBitacora(RegistroBitacora registro)
+    {
+        using var cmd = _conexion.CreateCommand();
+        cmd.CommandText = "INSERT INTO bitacora (fecha_utc, usuario, rol, accion, detalle) VALUES ($f, $u, $r, $a, $d);";
+        cmd.Parameters.AddWithValue("$f", registro.FechaUtc.ToString("O", CultureInfo.InvariantCulture));
+        cmd.Parameters.AddWithValue("$u", registro.Usuario);
+        cmd.Parameters.AddWithValue("$r", registro.Rol.ToString());
+        cmd.Parameters.AddWithValue("$a", registro.Accion);
+        cmd.Parameters.AddWithValue("$d", (object?)registro.Detalle ?? DBNull.Value);
+        cmd.ExecuteNonQuery();
+    }
+
+    /// <summary>Devuelve las últimas entradas de bitácora (más recientes primero).</summary>
+    public List<RegistroBitacora> ListarBitacora(int maximo = 200)
+    {
+        var registros = new List<RegistroBitacora>();
+        using var cmd = _conexion.CreateCommand();
+        cmd.CommandText = """
+            SELECT id, fecha_utc, usuario, rol, accion, detalle
+            FROM bitacora ORDER BY id DESC LIMIT $max;
+            """;
+        cmd.Parameters.AddWithValue("$max", Math.Max(1, maximo));
+        using var r = cmd.ExecuteReader();
+        while (r.Read())
+        {
+            if (!DateTime.TryParse(r.GetString(1), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var fecha))
+                fecha = DateTime.UnixEpoch;
+
+            var rol = Enum.TryParse<RolUsuario>(r.GetString(3), true, out var parseado) ? parseado : RolUsuario.Operador;
+            registros.Add(new RegistroBitacora(
+                r.GetInt32(0),
+                fecha,
+                r.GetString(2),
+                rol,
+                r.GetString(4),
+                r.IsDBNull(5) ? null : r.GetString(5)));
+        }
+        return registros;
     }
 
     public void Dispose() => _conexion.Dispose();
