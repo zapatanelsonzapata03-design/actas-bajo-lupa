@@ -1,0 +1,4 @@
+Departamento,Municipio,Recinto,Mesa,Habilitados,Emitidos,Blancos,Nulos,EsFraudeSimulado,Candidato A,Candidato B,Candidato C,Candidato D
+D01,M001,R0001,1,200,160,4,6,0,60,45,30,15
+D01,M001,R0001,2,210,170,3,7,0,62,50,32,16
+D01,M001,R0001,3,200,200,0,0,1,150,20,20,10

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AuditaActas.Dominio\AuditaActas.Dominio.csproj" />
+    <ProjectReference Include="..\AuditaActas.Aplicacion\AuditaActas.Aplicacion.csproj" />
+    <ProjectReference Include="..\AuditaActas.Infraestructura\AuditaActas.Infraestructura.csproj" />
+  </ItemGroup>
+</Project>

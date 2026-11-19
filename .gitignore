@@ -1,0 +1,21 @@
+## .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+*.DotSettings.user
+TestResults/
+[Dd]ebug/
+[Rr]elease/
+*.log
+## Bases de datos locales y datos generados
+*.db
+*.db-journal
+datos/generados/
+## Sistema
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
