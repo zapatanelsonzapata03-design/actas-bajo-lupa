@@ -8,6 +8,33 @@ documento**.
 > **Cómo usar este documento en la defensa:** lea la respuesta en negrita; si el docente pide “muéstreme”,
 > abra la evidencia indicada. El guion cronometrado está en [`10-guion-demo.md`](10-guion-demo.md).
 
+## Dictamen actual
+
+**Resultado: APROBADO PARA INICIAR Y CONTINUAR EL DESARROLLO, con condiciones de cierre menores.**
+
+La auditoría de preparación cumple las 52 preguntas. La evidencia ejecutable actual confirma:
+
+| Verificación | Resultado |
+|---|---|
+| Compilación | Correcta, 0 advertencias y 0 errores |
+| Pruebas automatizadas | 47 de 47 aprobadas |
+| MVP RF1–RF6 | Implementado y verificable |
+| Métrica de detección | 95,3 % recall y 2,8 % falsos positivos |
+| Rendimiento | 10.000 actas auditadas en ≈32–34 ms |
+
+No se encontraron decisiones fundamentales bloqueantes ni requisitos críticos sin comprender. Las siguientes
+acciones son condiciones de cierre, no correcciones que invaliden la aprobación:
+
+| Prioridad | Corrección o acción pendiente | Responsable sugerido |
+|---|---|---|
+| Alta | Ensayar la demo completa y confirmar fecha/formato de entrega o defensa | Todos; Alex coordina |
+| Media | Ejecutar `dotnet restore/build/test` y abrir la UI en la máquina del docente o en un equipo Windows limpio | Cristian |
+| Media | Confirmar formalmente si el docente acepta datos sintéticos, escritorio WinForms y SQLite | Equipo completo |
+| Baja | Cerrar T18 decidiendo implementar el gráfico o documentarlo explícitamente como no comprometido | Cristian |
+
+**Resultado técnico:** el proyecto no requiere detenerse para corregir el núcleo. Debe completar la
+validación externa y ensayar la defensa antes de entregar.
+
 ## Resumen de cumplimiento
 
 | Sección | Preguntas | Estado | Dónde está la prueba |
