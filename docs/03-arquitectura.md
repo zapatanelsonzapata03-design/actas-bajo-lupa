@@ -152,8 +152,8 @@ CREATE TABLE bitacora (
 | D9 | Evaluación con etiquetas del simulador | Validación con datos reales | No hay datos reales disponibles ni permiso; el simulador permite medir y auditar el método. |
 | D10 | Roles simples en memoria + bitácora SQLite | ASP.NET Identity, OAuth | El prototipo es local y académico; autenticación real está fuera de alcance. |
 
-**MathNet.Numerics** está referenciado en Aplicacion y reservado para chi-cuadrado; el MVP no lo usa. Si se
-quiere reducir dependencias, se puede quitar sin afectar el código actual.
+**MathNet.Numerics** se retiró de las dependencias: estaba reservado para chi-cuadrado, que no se implementa. Se agregará
+solo si esa prueba entra al alcance.
 
 ## 3.6 Partes técnicamente más difíciles o inciertas
 
@@ -171,13 +171,15 @@ quiere reducir dependencias, se puede quitar sin afectar el código actual.
 | Spike | Resultado | Evidencia |
 |---|---|---|
 | Generador + z-score | Métricas sobre 2.000 mesas | Evidencias §2 (recall 95,3 %, FP 2,8 %) |
-| Hash encadenado con 10.000 registros | Cadena íntegra y rápida | Evidencias §3 (hash 27 ms) |
+| Hash encadenado con 10.000 registros | Cadena íntegra y rápida | Evidencias §3 (hash 26 ms) |
 | SQLite ida y vuelta | 500 actas recuperadas en orden y cadena válida | Evidencias §5 |
 | CSV con comas y BOM | Importación correcta | `InfraestructuraTests` |
-| Rendimiento | 10.000 actas auditadas en ≈32 ms | `RendimientoTests`, evidencias §3 |
+| Rendimiento | 10.000 actas auditadas en ≈34 ms | `RendimientoTests`, evidencias §3 |
 | UI WinForms | Compila y ejecuta en Windows | `dotnet build`, `dotnet run --project src/AuditaActas.UI` |
 
-**No validado todavía:** gráfico ScottPlot (postergado) y ejecución en el equipo del docente. El riesgo se
+**Validado el 21/11/2026:** la UI WinForms se ejecutó en Windows con el flujo completo (ver [`evidencias/validacion-ui-windows.md`](evidencias/validacion-ui-windows.md)).
+
+**No validado todavía:** gráfico ScottPlot (postergado), ejecución en el equipo del docente. El riesgo se
 mitiga con el README y una instalación limpia (T20/T21).
 
 ## 3.8 Dependencias externas
@@ -187,7 +189,6 @@ mitiga con el README y una instalación limpia (T20/T21).
 | .NET SDK | 8.0 (probado también con 10.0.400) | Compilar y ejecutar | No; se instala una vez |
 | Windows 10/11 | — | UI WinForms | Solo para la UI; el núcleo corre en cualquier SO |
 | Microsoft.Data.Sqlite | 8.0.10 | Persistencia | No; se restaura con NuGet |
-| MathNet.Numerics | 5.0.0 | Reservado para chi-cuadrado | No; no se usa en el MVP |
 | xUnit + runner | 2.9.2 / 2.8.2 | Pruebas | No; se restaura con NuGet |
 | NuGet.org | — | Descarga de paquetes la primera vez | Solo la primera restauración; después funciona offline |
 

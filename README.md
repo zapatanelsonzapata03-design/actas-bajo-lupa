@@ -20,8 +20,13 @@ Proyecto de **Programación II (P2)**, Ingeniería en Sistemas, UNIFRANZ Cochaba
 | RF8 | Roles (Operador/Auditor/Administrador) y bitácora | Implementado (post-MVP adelantado) |
 | — | Gráfico de dispersión y chi-cuadrado | Pendiente (post-MVP, no bloquea) |
 
+**Validación de la UI:** ejecutada en Windows 11 limpio el 21/11/2026 con el flujo completo, importación CSV, registro de
+acta, roles y bitácora; capturas en [`docs/evidencias/validacion-ui-windows.md`](docs/evidencias/validacion-ui-windows.md).
+Incluye guardar/cargar la base. Pendiente: probar en el equipo del docente.
+
 **Calidad actual:** `dotnet build` con **0 advertencias y 0 errores**; `dotnet test` con **47 pruebas
 aprobadas**; solución en .NET 8 (probada localmente también con SDK 10.0.400).
+
 
 ## Métricas del objetivo general
 
@@ -33,7 +38,7 @@ Dataset estándar: 2.000 mesas, participación media 0,80, 5 % de fraude, semill
 | Tasa de falsos positivos | ≤ 10 % | **2,8 %** |
 | Precisión | Informativa | 65,6 % |
 | F1 | Informativa | 77,7 % |
-| Auditoría de 10.000 actas | < 10 s | **≈32 ms** |
+| Auditoría de 10.000 actas | < 10 s | **≈34 ms** |
 
 Reporte reproducible: [`docs/evidencias/reporte-verificacion.md`](docs/evidencias/reporte-verificacion.md).
 Regenérelo con:
@@ -41,6 +46,21 @@ Regenérelo con:
 ```bash
 dotnet run --project src/AuditaActas.Evidencia
 ```
+
+### Cómo leer la precisión (65,6 %)
+
+La precisión es más baja que el recall porque el fraude es raro: solo el 5 % de las
+mesas (106 de 2.000 en la semilla 42). Aunque la tasa de falsos positivos sea 2,8 %, ese 2,8 % se aplica
+a las ~1.894 mesas limpias y genera unas 53 alertas falsas, frente a 101 verdaderas.
+Es un efecto de la tasa base, no un defecto del umbral. El detector se usa para
+priorizar revisión humana, no para decidir fraude; por eso se prioriza el recall.
+
+### Robustez de la evaluación
+
+El detector se evalúa contra el fraude que inyecta el propio simulador (evaluación
+circular). Para reducir ese sesgo, el reporte se repite con varias semillas y distintos
+porcentajes de fraude (ver `docs/06-pruebas.md`). Los resultados de esta tabla
+corresponden a la semilla 42 y no son una garantía sobre datos reales.
 
 ## El problema en 30 segundos
 
@@ -67,6 +87,16 @@ de inicio.
 
 **Flujo de demo:** Generar datos → Verificar integridad → Alterar 1 acta (demo) → Verificar → Resultados →
 Auditar → Evaluación → Exportar.
+## Reportes que genera el sistema
+
+| Reporte | Contenido |
+| ------- | --------- |
+| `docs/evidencias/reporte-verificacion.md` | Parámetros de la corrida, matriz de confusión, sensibilidad al umbral, resultados con varias semillas, intervalo de confianza del recall |
+| CSV de actas sospechosas | Clave completa, z de participación y de apoyo, puntaje, motivo y estado de revisión |
+| Cómputo (RF4) | Totales por recinto, municipio, departamento y nacional, con verificación de cuadre |
+
+Todo es reproducible con `dotnet run --project src/AuditaActas.Evidencia`.
+Una alerta es un indicio para revisión humana, no una prueba de fraude.
 
 ## Roles
 
@@ -132,15 +162,9 @@ Suplencias: Alex↔Nelson, Nelson↔Cristian, Cristian↔Alex. Plan de 6 semanas
 11. [Matriz de trazabilidad](docs/11-matriz-trazabilidad.md)
 
 ## Supuestos y pendientes
-
-- **Docente:** falta confirmar si acepta datos simulados, el formato de entrega y si exige una base de datos
-  específica. La arquitectura actual usa SQLite. No bloquea el desarrollo: el producto es autocontenido y
-  exportable (CSV/SQLite).
-- **Fechas:** no hay fecha de entrega/defensa confirmada. El plan de 6 semanas es una proyección desde el
-  5/11/2026; al 19/11 se cumplieron dos semanas.
-- **Entorno:** la solución apunta a .NET 8 (`net8.0`/`net8.0-windows`); en esta máquina se validó también con
-  SDK 10.0.400. La UI requiere Windows; el núcleo y la evidencia son multiplataforma.
-- **Alcance:** MVP RF1–RF6; RF7/RF8 se adelantaron; dispersión y chi-cuadrado quedan para después.
+- **Entorno:** el proyecto apunta a .NET 8 (`net8.0` / `net8.0-windows`). El CI debe
+  compilar y probar con el SDK 8; la validación local con SDK 10 es adicional. La UI
+  (WinForms) requiere Windows; el núcleo y la consola de evidencia son multiplataforma.
 
 ## Limitaciones declaradas
 
@@ -150,6 +174,9 @@ Suplencias: Alex↔Nelson, Nelson↔Cristian, Cristian↔Alex. Plan de 6 semanas
   recalcule los hashes. Para producción se necesitaría firma digital y anclaje externo.
 - No hay autenticación con contraseña ni cifrado de la base. Es un prototipo local.
 - El gráfico de dispersión y chi-cuadrado no están implementados.
+- Mejora prevista para la cadena de hashes: usar HMAC-SHA256 con clave externa y/o
+  exportar el último hash como "ancla" fuera de la base (impreso, correo, repositorio
+  aparte). Así, reescribir toda la base y recalcular hashes dejaría de ser suficiente.
 
 ## Flujo de trabajo
 

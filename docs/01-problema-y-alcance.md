@@ -125,7 +125,7 @@ honestidad es parte del valor: un sistema que dijera “fraude confirmado” ser
 | Machine learning | Sin datos reales etiquetados no hay entrenamiento honesto; el z-score es explicable y verificable. |
 | PDF con diseño | El CSV es suficiente para el MVP y se abre en Excel; el PDF es presentación, no valor. |
 | Datos reales del OEP | Privacidad, permisos y riesgo de conclusiones incorrectas; fuera del alcance académico. |
-| Gráfico de dispersión / chi-cuadrado | Se posterga (T18/T19); no es necesario para cumplir el objetivo general. |
+| Gráfico de dispersión / chi-cuadrado | Se posterga (T18 y chi-cuadrado); no es necesario para cumplir el objetivo general. |
 
 ## 1.9 Supuestos y restricciones
 
@@ -148,7 +148,7 @@ RF6 (reporte). Es decir, el flujo completo “generar → registrar → verifica
 
 1. RF8 (roles y bitácora), conservando la base de datos y un usuario único.
 2. Pantalla de evaluación RF7, dejando las métricas en el reporte de evidencias.
-3. Gráfico de dispersión (T18) y chi-cuadrado (T19).
+3. Gráfico de dispersión (T18) y chi-cuadrado.
 4. Persistencia SQLite, trabajando solo en memoria y CSV (si el tiempo fuera extremo).
 
 El recorte no toca la cadena de hashes ni el cómputo: sin ellos el proyecto pierde su razón de ser.

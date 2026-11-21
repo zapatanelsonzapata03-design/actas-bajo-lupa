@@ -7,6 +7,8 @@ Esta carpeta contiene artefactos **generados** por el proyecto, no escritos a ma
 | `reporte-verificacion.md` | Reproducibilidad, cadena de hashes, recall/FP, rendimiento, CSV, SQLite, bitácora y permisos | `dotnet run --project src/AuditaActas.Evidencia` |
 | `actas_sospechosas_semilla42.csv` | Reporte de actas sospechosas del dataset estándar (2.000 mesas, semilla 42, 5 % fraude) | Igual que el anterior |
 
+| `validacion-ui-windows.md` + `capturas/` | Capturas de la UI WinForms ejecutada en Windows (21/11/2026): flujo completo, importación CSV, guardar/cargar base, roles y bitácora | Manual: ejecutar la UI y capturar (ver el documento) |
+
 El reporte incluye la fecha y hora de generación. Los valores pueden variar ligeramente entre ejecuciones
 (por ejemplo, milisegundos); las **metas** y los **umbrales** no cambian. La semilla 42 hace que los datos y
 las métricas sean reproducibles.

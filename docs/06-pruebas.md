@@ -67,7 +67,7 @@ Dataset: 2.000 mesas, participación media 0,80, 5 % de fraude, semilla 42.
 | Precisión | Informativa | 65,6 % | — |
 | F1 | Informativa | 77,7 % | — |
 | Alertas | Informativa | 154 de 2.000 | — |
-| Auditoría de 10.000 actas | < 10 s | **≈32 ms** | Cumple |
+| Auditoría de 10.000 actas | < 10 s | **≈34 ms** | Cumple |
 
 - Reporte completo: [`evidencias/reporte-verificacion.md`](evidencias/reporte-verificacion.md)
 - CSV de actas sospechosas: [`evidencias/actas_sospechosas_semilla42.csv`](evidencias/actas_sospechosas_semilla42.csv)
@@ -91,7 +91,7 @@ Esa limitación se declara en la UI, el README y la defensa.
 - [x] **RF7:** matriz y métricas sin dividir por cero (`EvaluacionTests`).
 - [x] **RF8:** el Operador no audita; solo el Administrador ve la bitácora (`SeguridadTests`).
 - [x] **RF8:** la bitácora guarda usuario, rol, acción y hora (`BitacoraTests`).
-- [x] **RNF2:** 10.000 actas auditadas en < 10 s (`RendimientoTests`, ≈32 ms).
+- [x] **RNF2:** 10.000 actas auditadas en < 10 s (`RendimientoTests`, ≈34 ms).
 - [x] **RNF7:** build sin advertencias y 47 pruebas en verde.
 - [x] **RNF4:** la demo se reproduce con el README y la semilla 42.
 

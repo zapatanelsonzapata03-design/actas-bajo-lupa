@@ -20,7 +20,7 @@ La auditoría de preparación cumple las 52 preguntas. La evidencia ejecutable a
 | Pruebas automatizadas | 47 de 47 aprobadas |
 | MVP RF1–RF6 | Implementado y verificable |
 | Métrica de detección | 95,3 % recall y 2,8 % falsos positivos |
-| Rendimiento | 10.000 actas auditadas en ≈32–34 ms |
+| Rendimiento | 10.000 actas auditadas en ≈34 ms |
 
 No se encontraron decisiones fundamentales bloqueantes ni requisitos críticos sin comprender. Las siguientes
 acciones son condiciones de cierre, no correcciones que invaliden la aprobación:
@@ -28,9 +28,9 @@ acciones son condiciones de cierre, no correcciones que invaliden la aprobación
 | Prioridad | Corrección o acción pendiente | Responsable sugerido |
 |---|---|---|
 | Alta | Ensayar la demo completa y confirmar fecha/formato de entrega o defensa | Todos; Alex coordina |
-| Media | Ejecutar `dotnet restore/build/test` y abrir la UI en la máquina del docente o en un equipo Windows limpio | Cristian |
+| Media | UI validada en un Windows limpio el 21/11/2026 (flujo completo, CSV, roles, bitácora, guardar/cargar base; ver [`evidencias/validacion-ui-windows.md`](evidencias/validacion-ui-windows.md)). **Falta** repetirla en el equipo del docente | Cristian |
 | Media | Confirmar formalmente si el docente acepta datos sintéticos, escritorio WinForms y SQLite | Equipo completo |
-| Baja | Cerrar T18 decidiendo implementar el gráfico o documentarlo explícitamente como no comprometido | Cristian |
+| Cerrada | T18 (gráfico): documentada como **no comprometida** (backlog §7.7) | Cristian |
 
 **Resultado técnico:** el proyecto no requiere detenerse para corregir el núcleo. Debe completar la
 validación externa y ensayar la defensa antes de entregar.
@@ -137,7 +137,7 @@ resultados son indicios estadísticos, no prueba de fraude”).
 Sí. El objetivo es: prototipo de escritorio que registre actas simuladas, compute por nivel geográfico y
 detecte actas anómalas, logrando sobre **2.000 mesas** con fraude inyectado **recall ≥ 80 %**, **falsos
 positivos ≤ 10 %** y **10.000 actas auditadas en < 10 s**. Cada número se comprueba con una prueba o con el
-reporte de evidencias. Resultado actual: **95,3 % / 2,8 % / ≈32 ms**.
+reporte de evidencias. Resultado actual: **95,3 % / 2,8 % / ≈34 ms**.
 
 **Evidencia:** [`02-requisitos.md`](02-requisitos.md) §2.1; [`06-pruebas.md`](06-pruebas.md) §6.5;
 `AuditoriaTests`, `RendimientoTests`.
@@ -171,7 +171,7 @@ anómalos (OE5/RF5/T11), duplicados (OE2/RF2/T7), cómputo (OE4/RF4/T10) y repor
 Con cuatro condiciones verificables:
 
 1. **Criterios de aceptación del MVP al 100 %** (lista marcada en [`06-pruebas.md`](06-pruebas.md) §6.6).
-2. **Métricas alcanzadas:** recall 95,3 % (meta ≥ 80 %), FP 2,8 % (meta ≤ 10 %), 10.000 actas en ≈32 ms.
+2. **Métricas alcanzadas:** recall 95,3 % (meta ≥ 80 %), FP 2,8 % (meta ≤ 10 %), 10.000 actas en ≈34 ms.
 3. **Demo ejecutable desde cero** con el README en < 15 minutos y el flujo completo en < 5 minutos.
 4. **Evidencia reproducible:** `dotnet test` (47 pruebas) y `dotnet run --project src/AuditaActas.Evidencia`
    generan el reporte que el docente puede revisar.
@@ -350,8 +350,8 @@ servicios en Aplicacion y pruebas sin UI.
 ### 27. ¿Han validado, o tienen previsto validar antes de depender de ellas, las tecnologías o integraciones críticas?
 
 Sí, las críticas ya están validadas: SQLite (prueba de 500 actas ida y vuelta), hash (10.000 registros),
-CSV (comas/BOM), rendimiento (≈32 ms para 10.000), UI (compila y ejecuta en Windows). **Pendiente:** ejecutar
-en el equipo del docente y decidir si el gráfico ScottPlot se implementa (T18); ninguna de las dos bloquea el
+CSV (comas/BOM), rendimiento (≈34 ms para 10.000), UI (compila y ejecuta en Windows). **Pendiente:** ejecutar
+en el equipo del docente (la UI ya se validó en un Windows limpio el 21/11/2026, ver `evidencias/validacion-ui-windows.md`) y el gráfico ScottPlot quedó como no comprometido (T18); ninguna de las dos bloquea el
 MVP. No hay integraciones externas que validar.
 
 **Evidencia:** [`03-arquitectura.md`](03-arquitectura.md) §3.7; `InfraestructuraTests`; evidencias §3 y §5.
@@ -368,7 +368,7 @@ UI sin diseñador (PR revisables), evaluación con etiquetas del simulador (no h
 
 ### 29. ¿Han identificado las dependencias externas necesarias para construir y ejecutar el sistema?
 
-Sí: .NET 8 SDK, Windows 10/11 para la UI, paquetes NuGet `Microsoft.Data.Sqlite` 8.0.10, `MathNet.Numerics`
+Sí: .NET 8 SDK, Windows 10/11 para la UI, paquetes NuGet `Microsoft.Data.Sqlite` 8.0.10
 5.0.0 (reservado), `xUnit` 2.9.2 y runner 2.8.2. La primera restauración requiere internet; después funciona
 offline. No hay APIs, credenciales, servidores ni permisos. La consola de evidencias corre en cualquier SO con
 .NET 8.
@@ -532,7 +532,7 @@ Sí:
 ### 45. ¿Qué harían si una persona clave del equipo deja de estar disponible?
 
 Se activa la suplencia: Alex↔Nelson, Nelson↔Cristian, Cristian↔Alex. El suplente hereda código probado,
-documentación y pruebas; no empieza de cero. Además se recorta alcance si es necesario (T18/T19) y se mantiene
+documentación y pruebas; no empieza de cero. Además se recorta alcance si es necesario (T18 y chi-cuadrado) y se mantiene
 el MVP. La fuente de verdad es el repositorio: README, docs, pruebas y CI. En la defensa, cualquier integrante
 puede explicar el módulo de otro porque hubo revisión cruzada.
 
@@ -568,7 +568,7 @@ privacidad y validación legal, y se conversaría antes de aceptarlo.
 
 No para comenzar. Ya están: SDK .NET, Windows, Visual Studio/CLI, paquetes NuGet, datos sintéticos y
 documentación. La primera restauración necesita internet; después funciona offline. **Pendiente no
-bloqueante:** probar en el equipo del docente y confirmar si acepta escritorio. No se necesitan permisos
+bloqueante:** la UI ya corrió en un Windows limpio (capturas en `evidencias/validacion-ui-windows.md`); falta probar en el equipo del docente y confirmar si acepta escritorio. No se necesitan permisos
 especiales porque no se usan datos reales ni sistemas oficiales. Si el equipo del docente no tiene Windows, la
 consola de evidencias y el núcleo corren en otro SO; solo la UI WinForms requiere Windows.
 
@@ -580,7 +580,7 @@ Sí. El orden está en el backlog y en el Gantt:
 
 - **Alex:** T9/T10 ya hechos; si empezara de cero, T5 (esquema) → T7 (repositorio/validaciones) → T9 (hash).
 - **Nelson:** T2 (spike generador/z-score) → T6 (RF1) → T11 (RF5) → T16 (RF7).
-- **Cristian:** T8 (esqueleto UI) → T12 (pantallas) → T13 (reporte) → T18 (gráfico, si aplica).
+- **Cristian:** T8 (esqueleto UI) → T12 (pantallas) → T13 (reporte) → T18 (cerrada como no comprometida).
 
 Hoy, con el MVP listo, las próximas tareas son T18 (opcional), T20 (docs, hecho) y T21 (ensayo). Cada una
 tiene primer paso concreto en [`07-backlog.md`](07-backlog.md) §7.8.
@@ -658,7 +658,7 @@ correspondiente.
 | 4 | Revisión lenta/subjetiva, duplicados, desconfianza, impugnaciones y costo político. |
 | 5 | Integridad verificable, priorización (95,3 % recall / 2,8 % FP) y reporte accionable. |
 | 6 | Ataca las dos causas y no promete fraude: entrega indicios para revisión humana. |
-| 7 | 2.000 mesas, recall ≥ 80 %, FP ≤ 10 %, 10.000 actas < 10 s; logrado 95,3/2,8/≈32 ms. |
+| 7 | 2.000 mesas, recall ≥ 80 %, FP ≤ 10 %, 10.000 actas < 10 s; logrado 95,3/2,8/≈34 ms. |
 | 8 | OE1–OE6, cada uno con indicador, prueba y estado. |
 | 9 | Matriz problema → objetivo → RF → tarea → prueba → evidencia. |
 | 10 | Aceptación 100 %, métricas, demo < 15 min y evidencia reproducible con un comando. |
@@ -699,7 +699,7 @@ correspondiente.
 | 45 | Suplentes A↔B, B↔C, C↔A; docs y pruebas; recorte si hace falta. |
 | 46 | No hay decisión bloqueante; solo fecha/formato del docente, que no frena el núcleo. |
 | 47 | No crítico; supuestos claros; datos reales sería un cambio de alcance. |
-| 48 | No; SDK/Windows/NuGet listos; falta validar el equipo del docente. |
+| 48 | No; SDK/Windows/NuGet listos; UI validada en Windows limpio (21/11); falta el equipo del docente. |
 | 49 | Alex T5→T7→T9; Nelson T2→T6→T11→T16; Cristian T8→T12→T13→T18. |
 | 50 | Sí; README → 01 → 02 → 03 → 04/07 → 06 y evidencias → CONTRIBUTING. |
 | 51 | Problema irreal, simulador trivial, métricas no alcanzadas, retraso, no integración, no ejecutable, mala interpretación, datos reales, equipo ausente, requisito incompatible. |
