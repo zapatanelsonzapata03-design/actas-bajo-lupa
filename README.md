@@ -94,6 +94,16 @@ de inicio.
 
 **Flujo de demo:** Generar datos → Verificar integridad → Alterar 1 acta (demo) → Verificar → Resultados →
 Auditar → Evaluación → Exportar.
+## Reportes que genera el sistema
+
+| Reporte | Contenido |
+| ------- | --------- |
+| `docs/evidencias/reporte-verificacion.md` | Parámetros de la corrida, matriz de confusión, sensibilidad al umbral, resultados con varias semillas, intervalo de confianza del recall |
+| CSV de actas sospechosas | Clave completa, z de participación y de apoyo, puntaje, motivo y estado de revisión |
+| Cómputo (RF4) | Totales por recinto, municipio, departamento y nacional, con verificación de cuadre |
+
+Todo es reproducible con `dotnet run --project src/AuditaActas.Evidencia`.
+Una alerta es un indicio para revisión humana, no una prueba de fraude.
 
 ## Roles
 
