@@ -169,15 +169,9 @@ Suplencias: Alex↔Nelson, Nelson↔Cristian, Cristian↔Alex. Plan de 6 semanas
 11. [Matriz de trazabilidad](docs/11-matriz-trazabilidad.md)
 
 ## Supuestos y pendientes
-
-- **Docente:** falta confirmar si acepta datos simulados, el formato de entrega y si exige una base de datos
-  específica. La arquitectura actual usa SQLite. No bloquea el desarrollo: el producto es autocontenido y
-  exportable (CSV/SQLite).
-- **Fechas:** no hay fecha de entrega/defensa confirmada. El plan de 6 semanas es una proyección desde el
-  5/11/2026; al 19/11 se cumplieron dos semanas.
-- **Entorno:** la solución apunta a .NET 8 (`net8.0`/`net8.0-windows`); en esta máquina se validó también con
-  SDK 10.0.400. La UI requiere Windows; el núcleo y la evidencia son multiplataforma.
-- **Alcance:** MVP RF1–RF6; RF7/RF8 se adelantaron; dispersión y chi-cuadrado quedan para después.
+- **Entorno:** el proyecto apunta a .NET 8 (`net8.0` / `net8.0-windows`). El CI debe
+  compilar y probar con el SDK 8; la validación local con SDK 10 es adicional. La UI
+  (WinForms) requiere Windows; el núcleo y la consola de evidencia son multiplataforma.
 
 ## Limitaciones declaradas
 
