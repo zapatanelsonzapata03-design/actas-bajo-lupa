@@ -22,6 +22,33 @@ Proyecto de **Programación II (P2)**, Ingeniería en Sistemas, UNIFRANZ Cochaba
 
 **Calidad actual:** `dotnet build` con **0 advertencias y 0 errores**; `dotnet test` con **47 pruebas
 aprobadas**; solución en .NET 8 (probada localmente también con SDK 10.0.400).
+### Cómo leer la precisión (65,6 %)
+
+La precisión es más baja que el recall porque el fraude es raro: solo el 5 % de las
+mesas (100 de 2.000). Aunque la tasa de falsos positivos sea 2,8 %, ese 2,8 % se aplica
+a las ~1.900 mesas limpias y genera unas 53 alertas falsas, frente a ~95 verdaderas.
+Es un efecto de la tasa base, no un defecto del umbral. El detector se usa para
+priorizar revisión humana, no para decidir fraude; por eso se prioriza el recall.
+
+### Robustez de la evaluación
+
+El detector se evalúa contra el fraude que inyecta el propio simulador (evaluación
+circular). Para reducir ese sesgo, el reporte se repite con varias semillas y distintos
+porcentajes de fraude (ver `docs/06-pruebas.md`). Los resultados de esta tabla
+corresponden a la semilla 42 y no son una garantía sobre datos reales.### Cómo leer la precisión (65,6 %)
+
+La precisión es más baja que el recall porque el fraude es raro: solo el 5 % de las
+mesas (100 de 2.000). Aunque la tasa de falsos positivos sea 2,8 %, ese 2,8 % se aplica
+a las ~1.900 mesas limpias y genera unas 53 alertas falsas, frente a ~95 verdaderas.
+Es un efecto de la tasa base, no un defecto del umbral. El detector se usa para
+priorizar revisión humana, no para decidir fraude; por eso se prioriza el recall.
+
+### Robustez de la evaluación
+
+El detector se evalúa contra el fraude que inyecta el propio simulador (evaluación
+circular). Para reducir ese sesgo, el reporte se repite con varias semillas y distintos
+porcentajes de fraude (ver `docs/06-pruebas.md`). Los resultados de esta tabla
+corresponden a la semilla 42 y no son una garantía sobre datos reales.
 
 ## Métricas del objetivo general
 
