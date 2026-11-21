@@ -20,6 +20,10 @@ Proyecto de **Programación II (P2)**, Ingeniería en Sistemas, UNIFRANZ Cochaba
 | RF8 | Roles (Operador/Auditor/Administrador) y bitácora | Implementado (post-MVP adelantado) |
 | — | Gráfico de dispersión y chi-cuadrado | Pendiente (post-MVP, no bloquea) |
 
+**Validación de la UI:** ejecutada en Windows 11 limpio el 21/11/2026 con el flujo completo, importación CSV, registro de
+acta, roles y bitácora; capturas en [`docs/evidencias/validacion-ui-windows.md`](docs/evidencias/validacion-ui-windows.md).
+Incluye guardar/cargar la base. Pendiente: probar en el equipo del docente.
+
 **Calidad actual:** `dotnet build` con **0 advertencias y 0 errores**; `dotnet test` con **47 pruebas
 aprobadas**; solución en .NET 8 (probada localmente también con SDK 10.0.400).
 ### Cómo leer la precisión (65,6 %)
@@ -50,6 +54,7 @@ circular). Para reducir ese sesgo, el reporte se repite con varias semillas y di
 porcentajes de fraude (ver `docs/06-pruebas.md`). Los resultados de esta tabla
 corresponden a la semilla 42 y no son una garantía sobre datos reales.
 
+
 ## Métricas del objetivo general
 
 Dataset estándar: 2.000 mesas, participación media 0,80, 5 % de fraude, semilla 42.
@@ -60,7 +65,7 @@ Dataset estándar: 2.000 mesas, participación media 0,80, 5 % de fraude, semill
 | Tasa de falsos positivos | ≤ 10 % | **2,8 %** |
 | Precisión | Informativa | 65,6 % |
 | F1 | Informativa | 77,7 % |
-| Auditoría de 10.000 actas | < 10 s | **≈32 ms** |
+| Auditoría de 10.000 actas | < 10 s | **≈34 ms** |
 
 Reporte reproducible: [`docs/evidencias/reporte-verificacion.md`](docs/evidencias/reporte-verificacion.md).
 Regenérelo con:
@@ -68,6 +73,21 @@ Regenérelo con:
 ```bash
 dotnet run --project src/AuditaActas.Evidencia
 ```
+
+### Cómo leer la precisión (65,6 %)
+
+La precisión es más baja que el recall porque el fraude es raro: solo el 5 % de las
+mesas (106 de 2.000 en la semilla 42). Aunque la tasa de falsos positivos sea 2,8 %, ese 2,8 % se aplica
+a las ~1.894 mesas limpias y genera unas 53 alertas falsas, frente a 101 verdaderas.
+Es un efecto de la tasa base, no un defecto del umbral. El detector se usa para
+priorizar revisión humana, no para decidir fraude; por eso se prioriza el recall.
+
+### Robustez de la evaluación
+
+El detector se evalúa contra el fraude que inyecta el propio simulador (evaluación
+circular). Para reducir ese sesgo, el reporte se repite con varias semillas y distintos
+porcentajes de fraude (ver `docs/06-pruebas.md`). Los resultados de esta tabla
+corresponden a la semilla 42 y no son una garantía sobre datos reales.
 
 ## El problema en 30 segundos
 

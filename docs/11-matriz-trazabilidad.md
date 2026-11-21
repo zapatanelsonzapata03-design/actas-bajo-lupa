@@ -16,7 +16,7 @@ Una fila por necesidad. Si algo no tiene prueba o evidencia, no está terminado.
 | 8 | No se sabe si el detector es confiable | OE5 | RF7 | T16 | `EvaluacionTests` (3) | Pantalla “Evaluación”; evidencias §2 |
 | 9 | Cualquiera puede auditar o alterar | — | RF8 | T17 | `SeguridadTests` (3) | Tabla de permisos; UI deshabilitada |
 | 10 | No hay registro de quién hizo qué | — | RF8 | T17 | `BitacoraTests` (4) | Tabla `bitacora`; pantalla “Bitácora” |
-| 11 | El sistema debe ser rápido | RNF2 | — | T9–T11 | `RendimientoTests` (1) | 10.000 actas en ≈32 ms |
+| 11 | El sistema debe ser rápido | RNF2 | — | T9–T11 | `RendimientoTests` (1) | 10.000 actas en ≈34 ms |
 | 12 | Debe ser reproducible | RNF4 | RF1 | T2, T6 | `MismaSemilla...` | Evidencias §1 |
 | 13 | Debe poder ejecutarse sin servidor | RNF5/RNF9 | — | T1, T7 | `dotnet build/test`; SQLite local | README; CI |
 | 14 | No debe usar datos personales | RNF6 | — | T6, T7 | Revisión de datasets y esquema | `datos/README.md`; alcance |

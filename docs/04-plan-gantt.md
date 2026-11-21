@@ -8,8 +8,11 @@
   confirmada**; el plan es una proyección, no un compromiso del docente.
 - **Dedicación:** 153 horas totales ≈ **51 h por persona** en 6 semanas (~8,5 h/semana). Es realista para un
   curso con otras materias.
-- **Estado real:** el ZIP inicial ya traía un esqueleto. En esta auditoría se completó el MVP (RF1–RF6),
-  se adelantaron RF7/RF8 y se generó evidencia reproducible. Las tareas se marcan con evidencia, no por fecha.
+- **Plan vs. avance real:** las columnas *Periodo* y el Gantt son la **proyección original** (no fechas en que se
+  terminó cada tarea). El avance real se mide solo por entregable y prueba: al 19 de noviembre el MVP (RF1–RF6)
+  ya compila y pasa 47 pruebas, y RF7/RF8 se **adelantaron** respecto a la proyección. Por eso varias tareas con
+  periodo futuro figuran como "Hecho (adelantado)": el equipo está por delante del plan, no lo está maquillando.
+  El historial de commits del repositorio es la fuente de verdad de *cuándo* se hizo cada cosa.
 
 ## 4.2 Equipo, responsabilidades y suplentes
 
@@ -28,12 +31,12 @@ y las pruebas como contrato. Ningún módulo depende de conocimiento no escrito.
 |---|---|---|---:|---:|---|---|---|
 | 05–11 nov | T1 | Repositorio, solución, `Directory.Build.props` y README | Alex | 3 | — | Hecho | `AuditaActas.sln`, README |
 | 05–11 nov | T2 | Spike: generador multinomial + z-score en consola | Nelson | 6 | T1 | Hecho | `GeneradorService`, `AuditoriaService`, `GeneradorTests` |
-| 05–11 nov | T3 | Spike: hash encadenado con 10.000 registros | Alex | 4 | T1 | Hecho | Evidencias §3 (hash 10.000 en 27 ms) |
-| 05–11 nov | T4 | Spike: gráfico ScottPlot en WinForms | Cristian | 3 | T1 | **Cancelado**: gráfico postergado (T18) | Decisión §3.6 (gráfico postergado) |
+| 05–11 nov | T3 | Spike: hash encadenado con 10.000 registros | Alex | 4 | T1 | Hecho | Evidencias §3 (hash 10.000 en 26 ms) |
+| 05–11 nov | T4 | Spike: gráfico ScottPlot en WinForms | Cristian | 3 | T1 | **Cancelado** (T8 ya no depende de él): gráfico postergado (T18) | Decisión §3.6 (gráfico postergado) |
 | 05–11 nov | T5 | Esquema SQLite y modelo de dominio (congelado) | Alex | 5 | T1 | Hecho | `ActaRepositorio.Esquema`, `Acta.cs` |
 | 12–18 nov | T6 | Generador de datos RF1 | Nelson | 10 | T2, T5 | Hecho | `GeneradorService`, 3 pruebas |
 | 12–18 nov | T7 | Repositorio, validaciones y alta/importación RF2 | Alex | 10 | T5 | Hecho | `Acta.Validar`, `ActaCsv`, `RegistroService` |
-| 12–18 nov | T8 | Esqueleto de UI y navegación | Cristian | 8 | T4 | Hecho (sin gráfico) | `FormPrincipal` |
+| 12–18 nov | T8 | Esqueleto de UI y navegación | Cristian | 8 | T5 | Hecho (sin gráfico) | `FormPrincipal` |
 | 19–25 nov | T9 | Cadena de hashes y verificación RF3 | Alex | 8 | T7 | Hecho | `CadenaHashService`, 6 pruebas |
 | 19–25 nov | T10 | Cómputo por niveles RF4 | Alex | 8 | T7 | Hecho | `ComputoService`, 2 pruebas |
 | 19–25 nov | T11 | Auditoría z-score RF5 | Nelson | 10 | T6, T10 | Hecho | `AuditoriaService`, 5 pruebas |
@@ -43,7 +46,7 @@ y las pruebas como contrato. Ningún módulo depende de conocimiento no escrito.
 | 26 nov–02 dic | T15 | Corrección de errores del MVP | Todos | 8 | T14 | Hecho | Build 0 advertencias, pruebas en verde |
 | 03–09 dic | T16 | Evaluación del detector RF7 | Nelson | 8 | T14 | Hecho (adelantado) | `EvaluacionService`, pantalla, 3 pruebas |
 | 03–09 dic | T17 | Roles y bitácora RF8 | Alex | 8 | T14 | Hecho (adelantado) | `Permisos`, `BitacoraService`, 7 pruebas |
-| 03–09 dic | T18 | Gráfico de dispersión y pulido de UI | Cristian | 8 | T14 | **Pendiente** | — |
+| 03–09 dic | T18 | Gráfico de dispersión y pulido de UI | Cristian | 8 | T14 | **No comprometido** (decisión: fuera del alcance; se retoma solo si sobra tiempo) | Decisión §3.6 y backlog §7.7 |
 | 10–16 dic | T19 | Calibración de umbrales y análisis de resultados | Nelson | 6 | T16 | Hecho (barrido 2,0–4,0 documentado) | Evidencias §2 |
 | 10–16 dic | T20 | Documentación final y manual de usuario | Alex | 8 | T14 | Hecho | Docs 01–11, README, manual |
 | 10–16 dic | T21 | Ensayo de la demo y entrega | Todos | 6 | T15–T20 | **En curso** | Guion de demo |
@@ -72,7 +75,7 @@ gantt
     T1 Repositorio y README            :t1, 2026-11-05, 3d
     T2 Spike generador + z-score       :t2, 2026-11-05, 4d
     T3 Spike hash 10k                  :t3, 2026-11-05, 3d
-    T4 Spike ScottPlot (cancelado)     :t4, 2026-11-05, 2d
+    T4 Spike ScottPlot (cancelado)     :done, t4, 2026-11-05, 2d
     T5 Esquema y dominio               :crit, t5, 2026-11-06, 4d
 
     section Semana 2
@@ -108,7 +111,7 @@ gantt
 T1 → T5 → T7 → T9 ─┐
         └→ T10 ────┼→ T14 → T15 → T21
 T2 → T6 → T11 ─────┘
-T8 → T12 ──────────┘
+T5 → T8 → T12 ─────┘
 T13 ───────────────┘
 ```
 
@@ -129,7 +132,7 @@ elimina, en orden:
 
 1. RF8 (roles/bitácora) y se trabaja con un usuario único.
 2. Pantalla RF7 y se dejan las métricas en el reporte de evidencias.
-3. T18 (dispersión) y T19 (chi-cuadrado).
+3. T18 (dispersión) y chi-cuadrado (no planificado).
 4. Persistencia SQLite; se trabaja en memoria y CSV.
 
 **No se recorta:** la cadena de hashes, las validaciones, el cómputo ni el reporte. Sin ellos el proyecto no

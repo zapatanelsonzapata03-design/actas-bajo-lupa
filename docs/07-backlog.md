@@ -1,13 +1,13 @@
 # 7. Backlog y estado de las tareas
 
-**Convención:** `[x]` = terminado y verificado con evidencia; `[ ]` = pendiente. Una tarea no se marca por
+**Convención:** `[x]` = terminado y verificado con evidencia; `[ ]` = pendiente; `[~]` = cerrada como no comprometida. Una tarea no se marca por
 tiempo transcurrido, sino por entregable y prueba.
 
 ## 7.1 Semana 1 — Fundamentos
 
 - [x] **T1** Repositorio, solución, `Directory.Build.props` y README (Alex) — `AuditaActas.sln`, build en verde.
 - [x] **T2** Spike generador + z-score (Nelson) — `GeneradorService`, `AuditoriaService`, pruebas.
-- [x] **T3** Spike hash encadenado con 10.000 registros (Alex) — evidencias §3 (27 ms).
+- [x] **T3** Spike hash encadenado con 10.000 registros (Alex) — evidencias §3 (26 ms).
 - [ ] **T4** Spike ScottPlot en WinForms (Cristian) — **cancelado**: gráfico postergado a T18; no bloquea.
 - [x] **T5** Esquema SQLite y dominio congelados (Alex) — `ActaRepositorio.Esquema`, `Acta.cs`.
 
@@ -34,13 +34,13 @@ tiempo transcurrido, sino por entregable y prueba.
 
 - [x] **T16** Evaluación del detector RF7 (Nelson) — `EvaluacionService`, pantalla, 3 pruebas.
 - [x] **T17** Roles y bitácora RF8 (Alex) — `Permisos`, `BitacoraService`, 7 pruebas.
-- [ ] **T18** Gráfico de dispersión y pulido de UI (Cristian) — pendiente; no bloquea el MVP.
+- [~] **T18** Gráfico de dispersión y pulido de UI (Cristian) — **cerrada como no comprometida**: el gráfico no cambia la decisión del auditor; pasa al backlog futuro (§7.7).
 
 ## 7.6 Semana 6 — Cierre
 
 - [x] **T19** Calibración de umbrales y análisis (Nelson) — barrido 2,0–4,0 en evidencias.
 - [x] **T20** Documentación final y manual de usuario (Alex) — docs 01–11, README.
-- [ ] **T21** Ensayo de demo y entrega (Todos) — en curso; guion listo, falta ensayar y confirmar fecha.
+- [ ] **T21** Ensayo de demo y entrega (Todos) — en curso; guion listo, UI validada en Windows (21/11); falta ensayar y confirmar fecha.
 
 ## 7.7 Backlog futuro (no comprometido)
 
@@ -60,8 +60,8 @@ tiempo transcurrido, sino por entregable y prueba.
 | Persona | Próxima tarea | Primer paso concreto |
 |---|---|---|
 | Alex | T21 + revisión de PR | Confirmar fecha de defensa y ensayar el guion |
-| Nelson | T19 (análisis final) | Documentar por qué umbral 3,0 y no 3,5 |
-| Cristian | T18 | Evaluar si el gráfico aporta; si no, cerrar la tarea como “no se hará” |
+| Nelson | Revisión de la defensa | Ensayar la respuesta a "evaluación circular" (guion §preguntas difíciles) y explicar umbral 3,0 vs 3,5 con el barrido de evidencias §2 |
+| Cristian | Prueba en el equipo del docente | La UI ya se validó en un Windows limpio (21/11, `docs/evidencias/validacion-ui-windows.md`); falta repetirla en el equipo del docente |
 
 ## 7.9 Definition of Done
 

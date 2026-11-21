@@ -95,7 +95,7 @@ y 1,2 % de falsos positivos.”
 | Falsos positivos | **2,8 %** (meta ≤ 10 %) |
 | Precisión | 65,6 % |
 | Alertas | 154 de 2.000 |
-| Rendimiento | 10.000 actas en **≈32 ms** (meta < 10 s) |
+| Rendimiento | 10.000 actas en **≈34 ms** (meta < 10 s) |
 | Pruebas | **47** |
 | Tareas | 21, 153 h, 3 personas |
 | Umbral | 3,0 (barrido 2,0–4,0) |

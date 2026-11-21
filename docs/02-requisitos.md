@@ -8,7 +8,7 @@
 > en menos de 10 segundos**.
 
 **Cómo se comprueba:** `dotnet run --project src/AuditaActas.Evidencia` genera un reporte con las métricas y
-los tiempos. Resultado actual: **recall 95,3 %**, **falsos positivos 2,8 %**, **10.000 actas en ≈32 ms**
+los tiempos. Resultado actual: **recall 95,3 %**, **falsos positivos 2,8 %**, **10.000 actas en ≈34 ms**
 (ver [`evidencias/reporte-verificacion.md`](evidencias/reporte-verificacion.md)).
 
 ## 2.2 Objetivos específicos
@@ -195,7 +195,7 @@ con usuario, rol, acción, detalle y hora UTC.
 | ID | Calidad | Requisito medible | Cómo se verifica | Estado |
 |---|---|---|---|---|
 | RNF1 | Integridad | Actas inmutables; cualquier cambio posterior se detecta | Cadena SHA-256 y prueba de alteración | Cumple |
-| RNF2 | Rendimiento | 10.000 actas auditadas en < 10 s | `RendimientoTests`; evidencia: ≈32 ms | Cumple |
+| RNF2 | Rendimiento | 10.000 actas auditadas en < 10 s | `RendimientoTests`; evidencia: ≈34 ms | Cumple |
 | RNF3 | Usabilidad | Flujo completo de demo en < 5 min | Guion de demo cronometrado | Cumple |
 | RNF4 | Reproducibilidad | Misma semilla ⇒ mismos datos y métricas | `GeneradorTests`, evidencia §1 | Cumple |
 | RNF5 | Compatibilidad | Windows 10/11 + .NET 8; núcleo multiplataforma | `dotnet build`/`dotnet test`; UI solo Windows | Cumple |
