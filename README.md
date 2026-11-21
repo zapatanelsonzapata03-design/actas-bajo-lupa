@@ -187,6 +187,9 @@ Suplencias: Alex↔Nelson, Nelson↔Cristian, Cristian↔Alex. Plan de 6 semanas
   recalcule los hashes. Para producción se necesitaría firma digital y anclaje externo.
 - No hay autenticación con contraseña ni cifrado de la base. Es un prototipo local.
 - El gráfico de dispersión y chi-cuadrado no están implementados.
+- Mejora prevista para la cadena de hashes: usar HMAC-SHA256 con clave externa y/o
+  exportar el último hash como "ancla" fuera de la base (impreso, correo, repositorio
+  aparte). Así, reescribir toda la base y recalcular hashes dejaría de ser suficiente.
 
 ## Flujo de trabajo
 
