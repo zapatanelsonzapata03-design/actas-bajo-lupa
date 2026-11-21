@@ -56,6 +56,5 @@ Operador, y las anteriores con rol Administrador.
 ## 5. Lo que aún NO está validado
 
 - Ejecución en el equipo del docente.
-- Observación de interfaz: con la ventana en ancho reducido, la barra de herramientas se corta (el botón
-  "Alterar 1 acta (demo)" y el selector de rol quedan parcialmente ocultos; hay barra de desplazamiento
+- el selector de rol quedan parcialmente ocultos; hay barra de desplazamiento
   horizontal). Es un detalle de presentación; maximizar la ventana lo resuelve.
